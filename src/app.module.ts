@@ -5,6 +5,7 @@ import { Neo4jModule } from '~shared/database/neo4j/neo4j.module';
 import { Neo4jConfig } from '~shared/database/neo4j/src/interfaces/neo4j-config.interface';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { UserModule } from './users/users.module';
       }),
     }),
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
