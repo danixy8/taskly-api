@@ -1,5 +1,12 @@
 {
   "compilerOptions": {
+      "strict": false,
+      "noImplicitAny": false, // Permite tipos implícitos 'any'
+      "strictNullChecks": false,
+      "strictFunctionTypes": false,
+      "strictBindCallApply": false,
+      "allowUnreachableCode": true,
+      "allowUnusedLabels": true,
       "module": "commonjs",
       "declaration": true,
       "removeComments": true,

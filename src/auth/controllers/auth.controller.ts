@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Post, Delete, Request, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+  UseInterceptors,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Transaction } from 'neo4j-driver';
 import { CreateUserDto } from '~users/dtos/create-user.dto';
 import { UserService } from '~users/services/user.service';
@@ -10,7 +20,7 @@ import { JwtAuthGuard } from '~auth/guards/jwt-auth.guard';
 export class AuthController {
   constructor(
     private readonly userService: UserService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
   ) {}
 
   @UseInterceptors(Neo4jTransactionInterceptor)
@@ -21,36 +31,32 @@ export class AuthController {
 
     const user = await this.userService.create(transaction, createUserDto);
 
-    const { access_token } = await this.authService.createToken(user)
+    const { access_token } = await this.authService.createToken(user);
 
     const userData = user.getUserData();
 
-    return { ...userData,
-      access_token
-     };
+    return { ...userData, access_token };
   }
 
   @UseGuards(JwtAuthGuard)
   @Post('login')
-  async postLogin(@Request() request){
-    const user = request.user;
-    const { access_token } = await this.authService.createToken(request.user)
+  async postLogin(@Request() request) {
+    const { access_token } = await this.authService.createToken(request.user);
 
     return {
       ...request.user.toJson(),
-      access_token
-    }
+      access_token,
+    };
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('user')
-  async getUser(@Request() request){
-    const { access_token } = await this.authService.createToken(request.user)
+  async getUser(@Request() request) {
+    const { access_token } = await this.authService.createToken(request.user);
 
     return {
       ...request.user.toJson(),
-      access_token
-    }
+      access_token,
+    };
   }
-
 }
