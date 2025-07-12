@@ -28,11 +28,28 @@
 
 ## Project setup
 
+### Prerequisites
+- Docker Desktop **running** (🐳 icon visible in system tray)
+- Node.js 16+ and npm/yarn
+
 ```bash
 $ npm install
 ```
 
-## Compile and run the project
+## Infrastructure Setup
+### Launch Required Services
+This project uses Docker Compose to manage dependencies (Neo4j, Redis, etc.). To start:
+
+Ensure Docker Desktop is running
+
+From the project root execute:
+
+```bash
+$ docker compose up -d --build
+```
+
+## Running the Application
+### Compile and run the project
 
 ```bash
 # development
