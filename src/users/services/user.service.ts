@@ -27,6 +27,18 @@ export class UserService {
     return new User(user);
   }
 
+  async findById(id: string): Promise<User | undefined> {
+    const res = await this.neo4jService.read(
+      `
+    MATCH (u:User {id: $id})
+    RETURN u
+    `,
+      { id },
+    );
+
+    return this.hydrate(res);
+  }
+
   async findByEmail(email: string): Promise<User | undefined> {
     const res = await this.neo4jService.read(
       `

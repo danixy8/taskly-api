@@ -15,6 +15,7 @@ import { UserService } from '~users/services/user.service';
 import { AuthService } from '~auth/services/auth.service';
 import { Neo4jTransactionInterceptor } from '~shared/database/neo4j/src/interceptors/neo4j-transaction.interceptor';
 import { JwtAuthGuard } from '~auth/guards/jwt-auth.guard';
+import { LocalAuthGuard } from '~auth/guards/local-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -38,13 +39,17 @@ export class AuthController {
     return { ...userData, access_token };
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(LocalAuthGuard)
   @Post('login')
   async postLogin(@Request() request) {
     const { access_token } = await this.authService.createToken(request.user);
 
+    const { id, email, dateOfBirth } = request.user.node.properties;
+
     return {
-      ...request.user.toJson(),
+      id,
+      email,
+      dateOfBirth,
       access_token,
     };
   }
@@ -53,9 +58,12 @@ export class AuthController {
   @Get('user')
   async getUser(@Request() request) {
     const { access_token } = await this.authService.createToken(request.user);
+    const { id, email, dateOfBirth } = request.user.node.properties;
 
     return {
-      ...request.user.toJson(),
+      id,
+      email,
+      dateOfBirth,
       access_token,
     };
   }
