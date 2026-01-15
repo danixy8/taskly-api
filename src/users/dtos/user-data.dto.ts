@@ -14,6 +14,6 @@ export class UserData {
   @Field(() => String, { nullable: true })
   lastName?: string;
 
-  @Field(() => Date, { nullable: true })
-  dateOfBirth?: Date;
+  @Field(() => String, { nullable: true })
+  dateOfBirth?: string;
 }
