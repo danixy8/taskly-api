@@ -9,15 +9,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { join } from 'path';
-import { Resolver, Query } from '@nestjs/graphql';
-
-@Resolver()
-class TestResolver {
-  @Query(() => String)
-  hello() {
-    return 'testing graphQL server' + new Date().toISOString();
-  }
-}
 
 @Module({
   imports: [
@@ -50,6 +41,6 @@ class TestResolver {
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, TestResolver],
+  providers: [AppService],
 })
 export class AppModule {}

@@ -21,13 +21,21 @@ type AuthResponse {
 }
 
 type Query {
-  hello: String!
+  users: [User!]!
   currentUser: User!
 }
 
 type Mutation {
+  updateProfile(input: UpdateUserDto!): User!
+  deleteAccount: Boolean!
   register(input: CreateUserDto!): AuthResponse!
   login(input: LoginDto!): AuthResponse!
+}
+
+input UpdateUserDto {
+  firstName: String
+  lastName: String
+  dateOfBirth: String
 }
 
 input CreateUserDto {
