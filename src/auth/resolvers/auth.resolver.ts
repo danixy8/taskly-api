@@ -26,10 +26,9 @@ export class AuthResolver {
   @Query(() => User)
   @UseGuards(GqlJwtAuthGuard)
   currentUser(@GqlCurrentUser() user: User) {
-    const { access_token } = this.authService.createToken(user);
     return {
-      ...user.getUserData(),
-      access_token,
+      getId: user.getId(),
+      getUserData: user.getUserData(),
     };
   }
 
@@ -45,7 +44,10 @@ export class AuthResolver {
     const { access_token } = this.authService.createToken(user);
     return {
       access_token,
-      user: user.getUserData(),
+      user: {
+        getId: user.getId(),
+        getUserData: user.getUserData(),
+      },
     };
   }
 
@@ -63,7 +65,10 @@ export class AuthResolver {
     const { access_token } = this.authService.createToken(user);
     return {
       access_token,
-      user: user.getUserData(),
+      user: {
+        getId: user.getId(),
+        getUserData: user.getUserData(),
+      },
     };
   }
 }
